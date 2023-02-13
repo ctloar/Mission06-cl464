@@ -14,8 +14,10 @@ namespace Mission06_cl464.Models
             // Leave blank for now
         }
 
+        // Used to query and save instances of MovieForm
         public DbSet<MovieForm> responses { get; set; }
 
+        // Seeds the database with the data below
         protected override void OnModelCreating(ModelBuilder mb)
         {
             mb.Entity<MovieForm>().HasData(

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mission06_cl464.Models
 {
+    // Model tied to the Submit Movie html form. Uses Data Annotations for form validation 
     public class MovieForm
     {
         [Key]

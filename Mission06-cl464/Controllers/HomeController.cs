@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Mission06_cl464.Controllers
 {
+    // Controller that handles the routes of the application
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,21 +23,27 @@ namespace Mission06_cl464.Controllers
             movieContext = movie;
         }
 
+        // returns the Index view
         public IActionResult Index()
         {
             return View();
         }
 
+        // returns the Podcasts view
         public IActionResult Podcasts()
         {
             return View();
         }
 
+        // if the request is a GET, return the SubmitMovie view
         [HttpGet]
         public IActionResult SubmitMovie()
         {
             return View();
         }
+
+        // if the request is a POST and model is valid, add and save changes to database and return confirmation view
+        // else return the SubmitMovie view again
         [HttpPost]
         public IActionResult SubmitMovie(MovieForm response)
         {
