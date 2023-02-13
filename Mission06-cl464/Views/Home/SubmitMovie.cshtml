@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Submit a Movie";
+}
+
+@model MovieForm;
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<form method="post">
+    <label>Category:</label>
+    <input asp-for="Category" />
+    <br />
+    <label>Movie Title:</label>
+    <input asp-for="Title" />
+    <br />
+    <label>Year Released:</label>
+    <input asp-for="Year" />
+    <br />
+    <label>Director:</label>
+    <input asp-for="Director" />
+    <br />
+    <label>Rating:</label>
+    <select asp-for="Rating">
+        <option value="R">G</option>
+        <option value="PG-13">PG</option>
+        <option value="PG">PG-13</option>
+        <option value="G">R</option>
+    </select>
+    <br />
+    <label>Edited?</label>
+    Yes<input asp-for="Edited" type="radio" name="edit" value=true/>
+    No<input asp-for="Edited" type="radio" name="edit" value=false />
+    <br />
+    <label>Lent To:</label>
+    <input asp-for="LentTo" />
+    <br />
+    <label>Notes:</label>
+    <input asp-for="Notes" />
+    <br />
+    <button type="submit">Submit</button>
+    <br />
+    <div asp-validation-summary="All"></div>
+</form>
