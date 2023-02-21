@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission06_cl464.Models;
 using System;
@@ -13,13 +14,11 @@ namespace Mission06_cl464.Controllers
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private MovieContext movieContext { get; set; }
 
         // Constructor
-        public HomeController(ILogger<HomeController> logger, MovieContext movie)
+        public HomeController(MovieContext movie)
         {
-            _logger = logger;
             movieContext = movie;
         }
 
@@ -39,6 +38,8 @@ namespace Mission06_cl464.Controllers
         [HttpGet]
         public IActionResult SubmitMovie()
         {
+            ViewBag.Categories = movieContext.Categories.ToList();
+
             return View();
         }
 
@@ -57,15 +58,57 @@ namespace Mission06_cl464.Controllers
 
             else
             {
+                ViewBag.Categories = movieContext.Categories.ToList();
                 return View(response);
             }
             
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public IActionResult MovieList()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var movies = movieContext.responses
+                .Include(x => x.Category)
+             // .Where(x => x.Edited == false)
+                .OrderBy(x => x.Category)
+                .ToList();
+
+            return View(movies);
+        }
+
+        // Edit(parameter name) needs to match the route name specified in the startup file and the asp-route-(param name)
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Categories = movieContext.Categories.ToList();
+            var movie = movieContext.responses.Single(x => x.MovieId == id);
+
+            return View("SubmitMovie", movie);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(MovieForm entry)
+        {
+            movieContext.Update(entry);
+            movieContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var movie = movieContext.responses.Single(x => x.MovieId == id);
+
+            return View(movie);
+        }
+        [HttpPost]
+        public IActionResult Delete(MovieForm movie)
+        {
+            movieContext.responses.Remove(movie);
+            movieContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
         }
     }
 }

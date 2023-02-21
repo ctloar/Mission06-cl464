@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Movie List";
+}
+
+@model List<MovieForm>;
+
+<table class="table table-dark table-bordered table-striped">
+    <thead class="font-weight-bold">
+        <tr>
+            <td>Category</td>
+            <td>Title</td>
+            <td>Year</td>
+            <td>Director</td>
+            <td>Rating</td>
+            <td>Edited</td>
+            <td>Lent to:</td>
+            <td>Notes</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+            {
+                <tr>
+                    <td>@movie.Category.CategoryName</td>
+                    <td>@movie.Title</td>
+                    <td>@movie.Year</td>
+                    <td>@movie.Director</td>
+                    <td>@movie.Rating</td>
+                    <td>@movie.Edited</td>
+                    <td>@movie.LentTo</td>
+                    <td>@movie.Notes</td>
+
+                    <!-- 
+                        routes to edit and delete:
+                        use asp-route-id to pass to the HomeController the movieId number so it can use it to filter to a single 
+                        record to edit,
+                    -->
+                    <td><a asp-controller="Home" asp-action="Edit" asp-route-id="@movie.MovieId">Edit</a></td>
+                    <td><a asp-controller="Home" asp-action="Delete" asp-route-id="@movie.MovieId">Delete</a></td>
+                </tr>
+            }
+
+    </tbody>
+    
+</table>

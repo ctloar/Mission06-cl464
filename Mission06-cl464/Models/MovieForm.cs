@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace Mission06_cl464.Models
 {
-    // Model tied to the Submit Movie html form. Uses Data Annotations for form validation 
+    // Model tied to the Submit Movie html form. Uses Data Annotations for form validation
     public class MovieForm
     {
         [Key]
         [Required]
         public int MovieId { get; set; }
-        [Required]
-        public string Category { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
@@ -26,5 +24,10 @@ namespace Mission06_cl464.Models
         public string LentTo { get; set; }
         [StringLength(25)]
         public string Notes { get; set; }
+
+        // Foreign Key
+        [Required]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

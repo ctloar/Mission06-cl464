@@ -15,15 +15,65 @@ namespace Mission06_cl464.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.32");
 
+            modelBuilder.Entity("Mission06_cl464.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryName = "Adventure"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryName = "Action"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            CategoryName = "Horror"
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            CategoryName = "Fantasy"
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            CategoryName = "Romance"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            CategoryName = "Documentary"
+                        });
+                });
+
             modelBuilder.Entity("Mission06_cl464.Models.MovieForm", b =>
                 {
                     b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -52,13 +102,15 @@ namespace Mission06_cl464.Migrations
 
                     b.HasKey("MovieId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             MovieId = 1,
-                            Category = "Adventure",
+                            CategoryId = 1,
                             Director = "Peter Jackson",
                             Edited = false,
                             LentTo = "",
@@ -70,7 +122,7 @@ namespace Mission06_cl464.Migrations
                         new
                         {
                             MovieId = 2,
-                            Category = "Adventure",
+                            CategoryId = 1,
                             Director = "Peter Jackson",
                             Edited = false,
                             LentTo = "",
@@ -82,7 +134,7 @@ namespace Mission06_cl464.Migrations
                         new
                         {
                             MovieId = 3,
-                            Category = "Adventure",
+                            CategoryId = 1,
                             Director = "Peter Jackson",
                             Edited = false,
                             LentTo = "",
@@ -91,6 +143,15 @@ namespace Mission06_cl464.Migrations
                             Title = "Return of the King",
                             Year = (short)2003
                         });
+                });
+
+            modelBuilder.Entity("Mission06_cl464.Models.MovieForm", b =>
+                {
+                    b.HasOne("Mission06_cl464.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
