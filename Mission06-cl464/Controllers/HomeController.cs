@@ -40,7 +40,7 @@ namespace Mission06_cl464.Controllers
         {
             ViewBag.Categories = movieContext.Categories.ToList();
 
-            return View();
+            return View(new MovieForm());
         }
 
         // if the request is a POST and model is valid, add and save changes to database and return confirmation view
